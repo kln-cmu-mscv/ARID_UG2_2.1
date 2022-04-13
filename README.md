@@ -36,3 +36,29 @@ python predict_video.py --zip-file <YOUR PREFERRED ZIPFILE NAME>
 - To view our paper, go to [this arxiv link](http://arxiv.org/abs/2006.03876)
 - Our code base is adapted from [Multi-Fiber Network for Video Recognition](https://github.com/cypw/PyTorch-MFNet), we would like to thank the authors for providing the code base.
 - You may contact me through cvpr2021.ug2challenge@gmail.com
+
+## ARID Classes
+
+```
+Class ID, Class
+0         Drink
+1         Jump
+2         Pick
+3         Pour
+4         Push
+5         Run
+6         Sit
+7         Stand
+8         Turn
+9         Walk
+10        Wave
+```
+
+## Data setup
+```
+cd ${ARID_Dataset}
+gdown 10sitw9Mi9Gv1jMfyMwbv78EZSpW_lKEx
+
+ln -sf ${ARID_Dataset}/clips_v1.5 .dataset/ARID/raw/train_data
+ln -sf ${ARID_Dataset}/clips_v1.5 ./dataset/ARID/raw/test_data
+```

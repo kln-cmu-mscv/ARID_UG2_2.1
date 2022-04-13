@@ -108,7 +108,7 @@ if __name__ == '__main__':
 					  force_color=True, video_transform=transforms.Compose([transforms.Resize((256,256)), transforms.RandomCrop((224,224)), transforms.ToTensor(), normalize]),
 					  name='predict', return_item_subpath=True,)
 
-	eval_iter = torch.utils.data.DataLoader(val_loader, batch_size=args.batch_size, shuffle=True, num_workers=args.workers, pin_memory=True)
+	eval_iter = torch.utils.data.DataLoader(val_loader, batch_size=args.batch_size, shuffle=False, num_workers=args.workers, pin_memory=True)
 
 	# main loop
 	net.net.eval()
@@ -136,7 +136,7 @@ if __name__ == '__main__':
 			video_subpath_i = video_subpaths[i_item]
 			_, pred_class_i = torch.topk(output_i, 1)
 			class_id_i = pred_class_i.numpy()[0][0]
-			video_id_i = int(video_subpath_i.split('.')[0])
+			video_id_i = 0 #int(video_subpath_i.split('.')[0])
 			pred_row = {field_names[0]: video_id_i, field_names[1]: video_subpath_i, field_names[2]: class_id_i}
 			pred_rows.append(pred_row)
 
