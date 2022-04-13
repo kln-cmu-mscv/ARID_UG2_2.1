@@ -59,6 +59,24 @@ Class ID, Class
 cd ${ARID_Dataset}
 gdown 10sitw9Mi9Gv1jMfyMwbv78EZSpW_lKEx
 
-ln -sf ${ARID_Dataset}/clips_v1.5 .dataset/ARID/raw/train_data
+ln -sf ${ARID_Dataset}/clips_v1.5 ./dataset/ARID/raw/train_data
 ln -sf ${ARID_Dataset}/clips_v1.5 ./dataset/ARID/raw/test_data
+
+
+PRETRAINED_MODELS=/home/srinitca/vlr/project/pretrained
+mkdir ${PRETRAINED_MODELS}
+cd ${PRETRAINED_MODELS}
+
+gdown 1uwW8iJyKkO4dnVZoV-wgN_1ko4f36nOk
+gdown 1_PhrhMD90i_xns0kGJBLdUC9lQfXnhXX
+gdown 1GKUfBqZ_L2nMiLT5z2l9Zo6m8eCfymOi
+gdown 1eSdDlc1E3KIff88nxPoy92wg8agEjJjT
+gdown 1btoVm82Jk61bIdLvz-lSVXcyzOUBcUdH
+gdown 1eUL6fJ313xnbjMQNDxac7-OVec_hC2Td
+
+# Back to project folder
+cd -
+
+ln -sf ${PRETRAINED_MODELS}/ ./network/pretrained
+
 ```
