@@ -2,10 +2,14 @@ import os
 import logging
 import torch
 import torch.nn as nn
+import numpy as np
+import random
+
 
 from . import video_sampler as sampler
 from . import video_transforms as transforms
 from .video_iterator import VideoIter
+from torch.utils.data.sampler import Sampler
 
 def get_arid(data_root='./dataset/ARID', clip_length=8, train_interval=2,
 			mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225],
@@ -36,15 +40,41 @@ def get_arid(data_root='./dataset/ARID', clip_length=8, train_interval=2,
 
 	return train
 
+class ClasswiseBatchSampler(Sampler):
+	def __init__(self, dataset, batch_size):	
+		len_dataset = len(dataset)  
+		self.dataset = dataset
+		self.batch_size = batch_size
 
-def creat(name, batch_size, num_workers=16, **kwargs):
+	def __iter__(self):
+		samples = self.get_samples(self.dataset, self.batch_size)
+		#random.shuffle(samples)
+		return iter(samples)
+
+	def __len__(self):
+		return len(self.get_samples(self.dataset, self.batch_size))
+		
+	def get_samples(self,train, batch_size):
+
+		class_inds = [torch.where(train.labels == class_idx)[0]
+				for class_idx in torch.unique(train.labels)]
+
+		samples = []
+		for i in range(len(class_inds)):
+			sample = torch.randint(0, len(class_inds[i]), size = (len(class_inds[i])//batch_size, batch_size))
+			samples.extend(class_inds[i][sample].tolist())
+		
+		return samples
+		
+
+def creat(name, batch_size, num_workers=8, **kwargs):
 
 	if name.upper() == 'ARID':
 		train = get_arid(**kwargs)
 	else:
 		assert NotImplementedError("iter {} not found".format(name))
 
-
-	train_loader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=False)
-
+	custom_sampler = ClasswiseBatchSampler(train, batch_size)
+	train_loader = torch.utils.data.DataLoader(train, batch_sampler = custom_sampler,shuffle=False, num_workers=num_workers, pin_memory=False)
+	
 	return train_loader

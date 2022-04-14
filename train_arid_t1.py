@@ -44,14 +44,14 @@ parser.add_argument('--resume-epoch', type=int, default=-1, help="resume train")
 
 # optimization
 parser.add_argument('--fine-tune', type=bool, default=True, help="apply different learning rate for different layers")
-parser.add_argument('--batch-size', type=int, default=8, help="batch size")
+parser.add_argument('--batch-size', type=int, default=4, help="batch size")
 parser.add_argument('--lr-base', type=float, default=0.01, help="learning rate")
 parser.add_argument('--lr-steps', type=list, default=[int(1e4*x) for x in [2, 4, 8]], help="number of samples to pass before changing learning rate")
 parser.add_argument('--lr-factor', type=float, default=0.1, help="reduce the learning with factor")
 
 # other training parameters
 parser.add_argument('--save-frequency', type=float, default=1, help="save once after N epochs")
-parser.add_argument('--end-epoch', type=int, default=2, help="maxmium number of training epoch")
+parser.add_argument('--end-epoch', type=int, default=10, help="maxmium number of training epoch")
 parser.add_argument('--random-seed', type=int, default=1, help='random seed (default: 1)')
 
 def autofill(args):

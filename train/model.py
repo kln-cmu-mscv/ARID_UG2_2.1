@@ -12,12 +12,13 @@ import torch
 from . import metric
 from . import callback
 
+from .tcc.alignment import compute_alignment_loss
 """
 Static Model
 """
 class static_model(object):
 
-	def __init__(self, net, criterion=None, model_prefix='', **kwargs):
+	def __init__(self, net, criterion=None, model_prefix='', loss_fn = 'tcc', **kwargs):
 		if kwargs:
 			logging.warning("Unknown kwargs: {}".format(kwargs))
 
@@ -25,6 +26,7 @@ class static_model(object):
 		self.net = net
 		self.model_prefix = model_prefix
 		self.criterion = criterion
+		self.loss_fn = loss_fn
 
 	def load_state(self, state_dict, strict=False):
 		if strict:
@@ -115,7 +117,12 @@ class static_model(object):
 				target_var = None
 
 		output = self.net(input_var)
-		if hasattr(self, 'criterion') and self.criterion is not None and target is not None and target_var is not None:
+		
+		if self.loss_fn == 'tcc':
+			
+			loss = compute_alignment_loss(output, batch_size=data.shape[0], stochastic_matching=True)
+			
+		elif hasattr(self, 'criterion') and self.criterion is not None and target is not None and target_var is not None:
 			loss = self.criterion(output, target_var)
 		else:
 			loss = None

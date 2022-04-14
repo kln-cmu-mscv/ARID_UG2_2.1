@@ -117,6 +117,7 @@ class Loss(EvalMetric):
 
     def update(self, preds, labels, losses):
         assert losses is not None, "Loss undefined."
+        
         for loss in losses:
             self.sum_metric += float(loss.numpy().sum())
             # self.num_inst += loss.shape[0]

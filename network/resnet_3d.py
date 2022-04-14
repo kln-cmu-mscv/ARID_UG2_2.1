@@ -14,6 +14,12 @@ except:
 	import initializer
 	from utils import load_state
 
+class Identity(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, x):
+        return x
 
 class RESNET18(nn.Module):
 
@@ -21,6 +27,7 @@ class RESNET18(nn.Module):
 		super(RESNET18, self).__init__()
 
 		self.resnet = torchvision.models.video.r3d_18(pretrained=False, progress=False, num_classes=num_classes, **kwargs)
+		self.resnet.fc = Identity()
 
 		###################
 		# Initialization #
@@ -45,6 +52,9 @@ if __name__ == "__main__":
 	logging.getLogger().setLevel(logging.DEBUG)
 	# ---------
 	net = RESNET18(num_classes=100, pretrained=True)
+
+	# #Removing last layer to get the embedding
+	# net.resnet.fc = Identity()
 	data = torch.autograd.Variable(torch.randn(1,3,16,224,224))
 	output = net(data)
 	print (output.shape)

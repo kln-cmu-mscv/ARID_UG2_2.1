@@ -9,6 +9,7 @@ import numpy as np
 
 import torch.utils.data as data
 import logging
+import torch
 
 
 class Video(object):
@@ -159,13 +160,15 @@ class VideoIter(data.Dataset):
 
 		# load video list
 		self.video_list = self._get_video_list(video_prefix=video_prefix, csv_list=csv_list, check_video=check_video, cached_info_path=cached_info_path)
-
+		
 		if shuffle_list_seed is not None:
 			self.rng.shuffle(self.video_list)
+		self.labels = torch.tensor([label[1] for label in self.video_list])
 		logging.info("VideoIter:: iterator initialized (phase: '{:s}', num: {:d})".format(name, len(self.video_list)))
 
 	def getitem_from_raw_video(self, index):
 		# get current video info
+		
 		v_id, label, vid_subpath, frame_count = self.video_list[index]
 		video_path = os.path.join(self.video_prefix, vid_subpath)
 
@@ -266,6 +269,7 @@ class VideoIter(data.Dataset):
 					new_video_info.update({video_subpath: frame_count})
 				else:
 					frame_count = -1
+				
 				info = [int(v_id), int(label), video_subpath, frame_count]
 				video_list.append(info)
 				if check_video and (i % logging_interval) == 0:
