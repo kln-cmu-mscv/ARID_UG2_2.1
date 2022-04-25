@@ -78,12 +78,19 @@ def creat(name, batch_size, num_workers=16, **kwargs):
 		train = get_arid(**kwargs)
 	elif name == 'rotnet':
 		train = get_rotnet(**kwargs)
+	elif name == 'rotnet_classifier':
+		train = get_arid(**kwargs)
 	else:
 		assert NotImplementedError("iter {} not found".format(name))
 
 
-	train_loader = torch.utils.data.DataLoader(
+	if name == 'rotnet':
+		train_loader = torch.utils.data.DataLoader(
 		train, batch_size=batch_size, shuffle=True, num_workers=num_workers, 
 		pin_memory=False, collate_fn=rotnet_collate_fn)
+	else:
+		train_loader = torch.utils.data.DataLoader(
+		train, batch_size=batch_size, shuffle=True, num_workers=num_workers, 
+		pin_memory=False)
 
 	return train_loader

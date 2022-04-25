@@ -10,6 +10,10 @@ def get_config(name):
         config['num_classes'] = 4
         config["sample_size"] = 224
         config["sample_duration"] = 16
+    elif name == 'rotnet_classifier':
+        config['num_classes'] = 11
+        config["sample_size"] = 224
+        config["sample_duration"] = 16
     else:
         logging.error("Configs for dataset '{}'' not found".format(name))
         raise NotImplemented

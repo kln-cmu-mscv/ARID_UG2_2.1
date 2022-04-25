@@ -69,7 +69,7 @@ def train_model(sym_net, model_prefix, dataset, input_conf, clip_length=16, trai
 	lr_scheduler = MultiFactorScheduler(base_lr=lr_base, steps=[int(x/(batch_size*num_worker)) for x in lr_steps],
 										factor=lr_factor, step_counter=step_counter)
 	# define evaluation metric
-	#metrics = metric.MetricList(metric.Loss(name="loss-ce"), metric.Accuracy(name="top1", topk=1), metric.Accuracy(name="top5", topk=5),)
-	metrics = metric.MetricList(metric.Loss(name="loss-ce"), metric.Accuracy(name="top1", topk=1),)
+	metrics = metric.MetricList(metric.Loss(name="loss-ce"), metric.Accuracy(name="top1", topk=1), metric.Accuracy(name="top5", topk=5),)
+	# metrics = metric.MetricList(metric.Loss(name="loss-ce"), metric.Accuracy(name="top1", topk=1),)
 
 	net.fit(train_iter=train_iter, optimizer=optimizer, lr_scheduler=lr_scheduler, metrics=metrics, epoch_start=epoch_start, epoch_end=end_epoch,)
