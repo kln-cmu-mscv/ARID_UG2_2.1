@@ -67,12 +67,12 @@ PRETRAINED_MODELS=/home/srinitca/vlr/project/pretrained
 mkdir ${PRETRAINED_MODELS}
 cd ${PRETRAINED_MODELS}
 
-gdown 1uwW8iJyKkO4dnVZoV-wgN_1ko4f36nOk
-gdown 1_PhrhMD90i_xns0kGJBLdUC9lQfXnhXX
-gdown 1GKUfBqZ_L2nMiLT5z2l9Zo6m8eCfymOi
-gdown 1eSdDlc1E3KIff88nxPoy92wg8agEjJjT
-gdown 1btoVm82Jk61bIdLvz-lSVXcyzOUBcUdH
-gdown 1eUL6fJ313xnbjMQNDxac7-OVec_hC2Td
+gdown 1uwW8iJyKkO4dnVZoV-wgN_1ko4f36nOk # c3d_pretrained.pth
+gdown 1_PhrhMD90i_xns0kGJBLdUC9lQfXnhXX # i3d_kinetics_flow_inception_v1.pth
+gdown 1GKUfBqZ_L2nMiLT5z2l9Zo6m8eCfymOi # i3d_kinetics_rgb_inception_v1.pth
+gdown 1eSdDlc1E3KIff88nxPoy92wg8agEjJjT # i3d_kinetics_rgb_r50_c3d.pth
+gdown 1btoVm82Jk61bIdLvz-lSVXcyzOUBcUdH # r3d_18-b3b3357e.pth
+gdown 1eUL6fJ313xnbjMQNDxac7-OVec_hC2Td # 
 
 # Back to project folder
 cd -
