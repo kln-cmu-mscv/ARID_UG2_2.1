@@ -110,3 +110,10 @@ venv.bak/
 *.out
 *.zip
 # *.csv
+
+
+
+dataset/ARID/raw/test_data
+dataset/ARID/raw/train_data
+network/pretrained
+
