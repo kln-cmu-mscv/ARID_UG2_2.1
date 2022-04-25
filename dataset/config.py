@@ -8,7 +8,7 @@ def get_config(name):
         config['num_classes'] = 11
     elif name == "rotnet":
         config['num_classes'] = 4
-        config["sample_size"] = 112
+        config["sample_size"] = 224
         config["sample_duration"] = 16
     else:
         logging.error("Configs for dataset '{}'' not found".format(name))

@@ -67,6 +67,11 @@ def get_rotnet(data_root='./dataset/ARID', clip_length=8, train_interval=2,
 	return train
 
 
+def rotnet_collate_fn(batch):
+	data = torch.cat([b[0] for b in batch], dim=0)
+	label = torch.cat([b[1] for b in batch], dim=0)
+	return (data, label.squeeze(1))
+
 def creat(name, batch_size, num_workers=16, **kwargs):
 
 	if name.upper() == 'ARID':
@@ -77,6 +82,8 @@ def creat(name, batch_size, num_workers=16, **kwargs):
 		assert NotImplementedError("iter {} not found".format(name))
 
 
-	train_loader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=num_workers, pin_memory=False)
+	train_loader = torch.utils.data.DataLoader(
+		train, batch_size=batch_size, shuffle=True, num_workers=num_workers, 
+		pin_memory=False, collate_fn=rotnet_collate_fn)
 
 	return train_loader

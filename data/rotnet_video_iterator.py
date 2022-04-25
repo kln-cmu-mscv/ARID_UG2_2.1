@@ -28,8 +28,8 @@ class RotnetVideoIter(VideoIter):
         target_three = torch.LongTensor(np.array([2]))
         target_four = torch.LongTensor(np.array([3]))
 
-        clip = torch.cat((clip_one, clip_two, clip_three, clip_four), dim=0)
-        target = torch.cat((target_one, target_two, target_three, target_four), dim=0)
+        clip = torch.stack((clip_one, clip_two, clip_three, clip_four))
+        target = torch.stack((target_one, target_two, target_three, target_four))
 
         if self.return_item_subpath:
             return clip, target, vid_subpath

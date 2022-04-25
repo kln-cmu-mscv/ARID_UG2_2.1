@@ -135,8 +135,8 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(
             block, 512, layers[3], shortcut_type, stride=2)
         last_duration = int(math.ceil(sample_duration / 16))
-        #last_size = int(math.ceil(sample_size / 32))
-        last_size = 4        
+        last_size = int(math.ceil(sample_size / 32))
+        #last_size = 4        
         self.avgpool = nn.AvgPool3d(
             (last_duration, last_size, last_size), stride=1)
         self.fc1 = nn.Linear(512 * block.expansion, 64)
@@ -175,6 +175,8 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
+        # B, R, C, F, H, W = x.shape
+        # x = x.reshape(-1, C, F, H, W)
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
