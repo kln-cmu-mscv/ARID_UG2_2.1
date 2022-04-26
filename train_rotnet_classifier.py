@@ -34,7 +34,7 @@ parser.add_argument('--train-frame-interval', type=int, default=2, help="define 
 parser.add_argument('--task-name', type=str, default='', help="name of current task, leave it empty for using folder name")
 parser.add_argument('--model-dir', type=str, default="./exps/models", help="set model save path.")
 parser.add_argument('--log-file', type=str, default="", help="set default logging file.")
-parser.add_argument('--pretrained_path', type=str, default="./exps/models/kln_rotnet_ep-0026.pth", help="path to pretrained model pth file")
+parser.add_argument('--pretrained-path', type=str, default="./exps/models/kln_rotnet_ep-0026.pth", help="path to pretrained model pth file")
 
 # device
 parser.add_argument('--gpus', type=str, default="0,1,2,3,4,5,6,7", help="define gpu id")

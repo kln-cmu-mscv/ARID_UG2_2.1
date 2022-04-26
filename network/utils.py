@@ -7,7 +7,7 @@ import torch
 import torch.utils.checkpoint as cp
 
 
-def load_state(network, state_dict):
+def load_state(network, state_dict, load_fc=False):
 	# customized partialy load function
 	net_state_keys = list(network.state_dict().keys())
 	net_state_keys_copy = net_state_keys.copy()
@@ -20,7 +20,7 @@ def load_state(network, state_dict):
 
 	for i, _ in enumerate(net_state_keys_copy):
 		name = net_state_keys_copy[i]
-		if name.startswith('classifier') or name.startswith('fc'):
+		if not load_fc and (name.startswith('classifier') or name.startswith('fc')) :
 			continue
 
 		if not sup_string:

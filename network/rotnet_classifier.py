@@ -20,11 +20,13 @@ class RotnetClassifier(torch.nn.Module):
             shortcut_type='A',
             sample_size=kwargs["sample_size"],
             sample_duration=kwargs["sample_duration"]
-        ).cuda()
+        )
 
         assert os.path.exists(pretrained_path), f"cannot locate:{pretrained_path}"
         pretrained_model = torch.load(pretrained_path)
-        load_state(self.rotnet_resnet, pretrained_model)
+        state_load_result = load_state(self.rotnet_resnet, pretrained_model['state_dict'], load_fc=True)
+
+        if state_load_result: print("successfully loaded pretrained model.")
 
         # freeze backbone
         for param in self.rotnet_resnet.parameters():

@@ -20,7 +20,7 @@ def get_symbol(name, print_net=False, **kwargs):
 	elif name == "rotnet_classifier":
 		net = RotnetClassifier(
 			**kwargs
-		).cuda()
+		)
 	else:
 		logging.error("network '{}'' not implemented".format(name))
 		raise NotImplementedError()
