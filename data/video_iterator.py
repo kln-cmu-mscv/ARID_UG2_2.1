@@ -259,7 +259,7 @@ class VideoIter(data.Dataset):
 				video_subpath = line['Video']
 				video_path = os.path.join(video_prefix, video_subpath)
 				if not os.path.exists(video_path):
-					# logging.warning("VideoIter:: >> cannot locate `{}'".format(video_path))
+					logging.error("VideoIter:: >> cannot locate `{}'".format(video_path))
 					continue
 				if check_video:
 					frame_count = self.video.open(video_path).count_frames(check_validity=True)
