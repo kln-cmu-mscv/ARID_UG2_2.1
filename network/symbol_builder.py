@@ -14,8 +14,8 @@ def get_symbol(name, print_net=False, **kwargs):
 		net = resnet18(
 			num_classes = 4,
 			shortcut_type = 'A', 
-			sample_size=kwargs["sample_size"], 
-			sample_duration=kwargs["sample_duration"]
+			sample_size=224,
+			sample_duration=16
 		).cuda()
 	elif name == "rotnet_classifier":
 		net = RotnetClassifier(
