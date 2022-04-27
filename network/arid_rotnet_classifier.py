@@ -22,7 +22,7 @@ class ARIDRotnetClassifier(torch.nn.Module):
         super(ARIDRotnetClassifier, self).__init__()
 
         # setup pretrained SSL Rotnet backbone
-        self.resnet3d = torchvision.models.video.r3d_18(pretrained=False, progress=False, num_classes=4, **kwargs)
+        self.resnet = torchvision.models.video.r3d_18(pretrained=False, progress=False, num_classes=4)
 
         ###################
         # Initialization #
@@ -30,21 +30,21 @@ class ARIDRotnetClassifier(torch.nn.Module):
 
         assert os.path.exists(pretrained_path), f"cannot locate:{pretrained_path}"
         pretrained_model_metadata = torch.load(pretrained_path)
-        state_load_result = load_state(self.resnet3d, pretrained_model_metadata['state_dict'], load_fc=False)
+        state_load_result = load_state(self, pretrained_model_metadata['state_dict'], load_fc=False)
 
         if state_load_result: print("successfully loaded pretrained model.")
 
         # freeze backbone until last layer
-        for param in list(self.resnet3d.parameters())[:-1]:
+        for param in list(self.resnet.parameters())[:-1]:
             param.requires_grad = False
 
-        self.resnet3d.fc = torch.nn.Linear(
-            self.resnet3d.fc.in_features,
+        self.resnet.fc = torch.nn.Linear(
+            self.resnet.fc.in_features,
             num_classes
         )
 
     def forward(self, x):
 
-        h = self.backbone(x)
+        h = self.resnet(x)
 
         return h
